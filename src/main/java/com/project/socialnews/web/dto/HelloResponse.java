@@ -1,4 +1,4 @@
-package com.proost.project.socialnews.web.dto;
+package com.project.socialnews.web.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

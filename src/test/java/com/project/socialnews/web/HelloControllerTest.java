@@ -1,4 +1,4 @@
-package com.proost.project.socialnews.web;
+package com.project.socialnews.web;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

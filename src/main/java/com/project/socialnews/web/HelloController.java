@@ -1,6 +1,6 @@
-package com.proost.project.socialnews.web;
+package com.project.socialnews.web;
 
-import com.proost.project.socialnews.web.dto.HelloResponse;
+import com.project.socialnews.web.dto.HelloResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
