@@ -20,15 +20,18 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    compileOnly("org.springframework.session:spring-session-jdbc")
 
-    testImplementation("com.h2database:h2")
+    implementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks {
     test {
-        useJUnitPlatform()
+        useJUnitPlatform {
+            includeEngines("junit-vintage")
+        }
     }
 }
