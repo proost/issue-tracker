@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     compileOnly("org.springframework.session:spring-session-jdbc")
+    implementation("org.mariadb.jdbc:mariadb-java-client")
 
     implementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
