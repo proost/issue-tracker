@@ -1,2 +1,2 @@
-rootProject.name = "social-news"
+rootProject.name = "issue-tracker"
 
