@@ -14,20 +14,20 @@ import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
-public class IndexController {
+public class PostsController {
 
     private final PostsService postsService;
     private final HttpSession httpSession;
 
-    @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
+    @GetMapping("/posts")
+    public String posts(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
 
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
 
-        return "index";
+        return "posts";
     }
 
     @GetMapping("/posts/save")
