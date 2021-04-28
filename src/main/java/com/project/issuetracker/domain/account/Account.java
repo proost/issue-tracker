@@ -1,4 +1,4 @@
-package com.project.issuetracker.domain.user;
+package com.project.issuetracker.domain.account;
 
 import com.project.issuetracker.domain.BaseTimeEntity;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class User extends BaseTimeEntity {
+public class Account extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,25 +19,33 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String team;
+
+    @Column
+    private String picture;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
     @Builder
-    public User(String name, String email, String team, Role role) {
+    public Account(String name, String email, String team, Role role, String password, String picture) {
         this.name = name;
         this.email = email;
         this.team = team;
+        this.picture = picture;
         this.role = role;
+        this.password = password;
     }
 
-    public User update(String name, String team) {
+    public Account update(String name, String team) {
         this.name = name;
         this.team = team;
 

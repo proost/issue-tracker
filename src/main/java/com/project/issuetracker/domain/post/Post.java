@@ -1,4 +1,4 @@
-package com.project.issuetracker.domain.posts;
+package com.project.issuetracker.domain.post;
 
 import com.project.issuetracker.domain.BaseTimeEntity;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Posts extends BaseTimeEntity {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class Posts extends BaseTimeEntity {
     private String author;
 
     @Builder
-    public Posts(String title, String content, String author) {
+    public Post(String title, String content, String author) {
         this.title = title;
         this.content = content;
         this.author = author;

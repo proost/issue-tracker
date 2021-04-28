@@ -1,21 +1,20 @@
-package com.project.issuetracker.config;
+package com.project.issuetracker.config.auth;
 
-import com.project.issuetracker.domain.user.Role;
+import com.project.issuetracker.domain.account.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AuthenticationProvider authenticationProvider;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -30,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .headers().frameOptions().disable()
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/login**").permitAll()
+                    .antMatchers("/login**", "/register**").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .anyRequest().authenticated()
                 .and()
@@ -44,13 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/login");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(new )
+        auth.authenticationProvider(authenticationProvider);
     }
 }

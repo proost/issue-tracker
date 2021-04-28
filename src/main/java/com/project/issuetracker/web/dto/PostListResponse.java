@@ -1,18 +1,18 @@
 package com.project.issuetracker.web.dto;
 
-import com.project.issuetracker.domain.posts.Posts;
+import com.project.issuetracker.domain.post.Post;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class PostsListResponse {
+public class PostListResponse {
     private Long id;
     private String title;
     private String author;
     private LocalDateTime modifiedDate;
 
-    public PostsListResponse(Posts entity) {
+    public PostListResponse(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.author = entity.getAuthor();

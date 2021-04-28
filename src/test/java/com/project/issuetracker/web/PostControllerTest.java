@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PostsControllerTest {
+public class PostControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;

@@ -1,8 +1,7 @@
 package com.project.issuetracker.web;
 
-import com.project.issuetracker.config.auth.dto.SessionUser;
-import com.project.issuetracker.service.posts.PostsService;
-import com.project.issuetracker.web.dto.PostsResponse;
+import com.project.issuetracker.service.post.PostService;
+import com.project.issuetracker.web.dto.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,32 +12,32 @@ import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
-public class PostsController {
+public class PostController {
 
-    private final PostsService postsService;
+    private final PostService postService;
     private final HttpSession httpSession;
 
     @GetMapping("/posts")
-    public String posts(Model model, SessionUser user) {
-        model.addAttribute("posts", postsService.findAllDesc());
+    public String posts(Model model) {
+        model.addAttribute("posts", postService.findAllDesc());
 
-        if (user != null) {
-            model.addAttribute("userName", user.getName());
-        }
+//        if (user != null) {
+//            model.addAttribute("userName", user.getName());
+//        }
 
-        return "posts";
+        return "post";
     }
 
     @GetMapping("/posts/save")
     public String postsSave() {
-        return "posts-save";
+        return "post-save";
     }
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
-        PostsResponse response = postsService.findById(id);
+        PostResponse response = postService.findById(id);
         model.addAttribute("post", response);
 
-        return "posts-update";
+        return "post-update";
     }
 }
