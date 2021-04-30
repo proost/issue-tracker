@@ -1,10 +1,12 @@
-package com.project.issuetracker.web.dto;
+package com.project.issuetracker.web.dto.post;
 
 import com.project.issuetracker.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString(exclude = {"content"})
 @Getter
 @NoArgsConstructor
 public class PostSaveRequest {

@@ -9,7 +9,7 @@
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
-<form class="form-horizontal" action='' method="POST">
+<form id="registration-form" class="form-horizontal" action='' method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">회원가입</legend>
@@ -18,7 +18,7 @@
       <!-- Username -->
       <label class="control-label"  for="username">이름</label>
       <div class="controls">
-        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        <input type="text" id="username" name="username" class="input-xlarge">
       </div>
     </div>
 
@@ -34,24 +34,25 @@
       <!-- Password-->
       <label class="control-label" for="password">비밀번호</label>
       <div class="controls">
-        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-        <p class="help-block">최소 12자리 이상 적어주세요</p>
+        <input type="password" id="password" name="password" class="input-xlarge" minlength="10" required>
+        <p class="help-block">최소 10자리 이상 적어주세요</p>
       </div>
     </div>
 
     <div class="control-group">
       <!-- Password -->
-      <label class="control-label"  for="password_confirm">비밀번호 확인</label>
+      <label class="control-label"  for="password-confirm">비밀번호 확인</label>
       <div class="controls">
-        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+        <input type="password" id="password-confirm" name="password_confirm" class="input-xlarge" >
+        <p id="password-confirm-msg" class="help-block"></p>
       </div>
     </div>
 
     <div class="control-group">
       <!-- TeamName -->
-      <label class="control-label" for="team_name">팀 명</label>
+      <label class="control-label" for="team-name">팀명</label>
       <div class="controls">
-        <input type="text" id="team_name" name="team_name" placeholder="" class="input-xlarge">
+        <input type="text" id="team-name" name="team_name" placeholder="" class="input-xlarge" required>
       </div>
     </div>
 
@@ -63,5 +64,7 @@
     </div>
   </fieldset>
 </form>
+
+<script src="/js/app/registration.js"></script>
 </body>
 </html>

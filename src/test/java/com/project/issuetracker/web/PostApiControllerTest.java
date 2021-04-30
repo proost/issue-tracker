@@ -3,15 +3,14 @@ package com.project.issuetracker.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.issuetracker.domain.post.Post;
 import com.project.issuetracker.domain.post.PostRepository;
-import com.project.issuetracker.web.dto.PostSaveRequest;
-import com.project.issuetracker.web.dto.PostUpdateRequest;
+import com.project.issuetracker.web.dto.post.PostSaveRequest;
+import com.project.issuetracker.web.dto.post.PostUpdateRequest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -23,6 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -38,9 +38,6 @@ public class PostApiControllerTest {
 
     @Autowired
     private WebApplicationContext context;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Autowired
     private PostRepository postRepository;
@@ -60,7 +57,7 @@ public class PostApiControllerTest {
         postRepository.deleteAll();
     }
 
-    @WithMockUser(roles = "USER")
+    @WithMockUser(username = "user", password = "passwd")
     @Test
     public void enrollPosts() throws Exception {
         //given
@@ -75,11 +72,10 @@ public class PostApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         //when
-        mvc.perform(post(url)
+        mvc.perform(post(url).with(user("user").password("passwd"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isOk());
-
 
         //then
         List<Post> all = postRepository.findAll();
@@ -87,7 +83,7 @@ public class PostApiControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
-    @WithMockUser(roles = "USER")
+    @WithMockUser(username = "user", password = "passwd")
     @Test
     public void updatePosts() throws Exception {
         //given
@@ -113,7 +109,7 @@ public class PostApiControllerTest {
         HttpEntity<PostUpdateRequest> requestEntity = new HttpEntity<>(request);
 
         // when
-        mvc.perform(put(url)
+        mvc.perform(put(url).with(user("user").password("passwd"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isOk());

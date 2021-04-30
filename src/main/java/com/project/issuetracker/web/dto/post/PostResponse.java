@@ -1,8 +1,10 @@
-package com.project.issuetracker.web.dto;
+package com.project.issuetracker.web.dto.post;
 
 import com.project.issuetracker.domain.post.Post;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString(exclude = {"content"})
 @Getter
 public class PostResponse {
 

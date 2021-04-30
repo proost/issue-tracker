@@ -2,10 +2,10 @@ package com.project.issuetracker.service.post;
 
 import com.project.issuetracker.domain.post.Post;
 import com.project.issuetracker.domain.post.PostRepository;
-import com.project.issuetracker.web.dto.PostListResponse;
-import com.project.issuetracker.web.dto.PostResponse;
-import com.project.issuetracker.web.dto.PostSaveRequest;
-import com.project.issuetracker.web.dto.PostUpdateRequest;
+import com.project.issuetracker.web.dto.post.PostListResponse;
+import com.project.issuetracker.web.dto.post.PostResponse;
+import com.project.issuetracker.web.dto.post.PostSaveRequest;
+import com.project.issuetracker.web.dto.post.PostUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package com.project.issuetracker.web;
 
 import com.project.issuetracker.service.post.PostService;
-import com.project.issuetracker.web.dto.PostResponse;
+import com.project.issuetracker.web.dto.post.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
