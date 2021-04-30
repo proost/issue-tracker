@@ -28,19 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrf().disable()
                     .headers().frameOptions().disable()
                 .and()
-                    .authorizeRequests()
-                    .antMatchers("/login**", "/registration**", "/h2-console/**").permitAll()
-                    .antMatchers("/api/v1/**").hasRole(Role.USER.name())
-                    .anyRequest().authenticated()
-                .and()
                     .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/login_proc")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/posts")
                     .permitAll()
                 .and()
                     .logout()
-                        .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login")
+                .and()
+                    .authorizeRequests()
+                    .antMatchers("/login**", "/registration**", "/h2-console/**").permitAll()
+                    .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                    .anyRequest().authenticated();
     }
 
     @Override

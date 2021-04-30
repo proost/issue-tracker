@@ -1,8 +1,9 @@
-package com.project.issuetracker.web;
+package com.project.issuetracker.web.controller;
 
 import com.project.issuetracker.service.account.AccountService;
 import com.project.issuetracker.web.dto.account.AccountSaveRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,11 @@ import java.io.IOException;
 public class RegistrationController {
 
     private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
     public String registration() {
-        return "account-registration";
+        return "account/registration";
     }
 
     @PostMapping("/registration")
@@ -31,10 +33,12 @@ public class RegistrationController {
         @RequestParam(value = "picture", required = false) final String picture,
         HttpServletResponse response
     ) throws IOException {
+        final String encodedPassword = passwordEncoder.encode(password);
+
         final AccountSaveRequest accountSaveRequest = AccountSaveRequest.builder()
                 .name(name)
                 .email(email)
-                .password(password)
+                .password(encodedPassword)
                 .team(team)
                 .picture(picture)
                 .build();

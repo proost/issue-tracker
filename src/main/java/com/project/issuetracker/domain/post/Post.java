@@ -37,4 +37,18 @@ public class Post extends BaseTimeEntity {
         this.title = title;
         this.content = content;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Post)) {
+            return false;
+        }
+        Post post = (Post) obj;
+
+        return this.id.equals(post.id);
+    }
 }

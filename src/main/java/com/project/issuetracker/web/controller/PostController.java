@@ -1,4 +1,4 @@
-package com.project.issuetracker.web;
+package com.project.issuetracker.web.controller;
 
 import com.project.issuetracker.service.post.PostService;
 import com.project.issuetracker.web.dto.post.PostResponse;
@@ -15,9 +15,8 @@ import javax.servlet.http.HttpSession;
 public class PostController {
 
     private final PostService postService;
-    private final HttpSession httpSession;
 
-    @GetMapping("/posts")
+    @GetMapping({"/","/posts"})
     public String posts(Model model) {
         model.addAttribute("posts", postService.findAllDesc());
 
@@ -25,12 +24,12 @@ public class PostController {
 //            model.addAttribute("userName", user.getName());
 //        }
 
-        return "post";
+        return "post/posts";
     }
 
     @GetMapping("/posts/save")
     public String postsSave() {
-        return "post-save";
+        return "post/post-save";
     }
 
     @GetMapping("/posts/update/{id}")
@@ -38,6 +37,6 @@ public class PostController {
         PostResponse response = postService.findById(id);
         model.addAttribute("post", response);
 
-        return "post-update";
+        return "post/post-update";
     }
 }

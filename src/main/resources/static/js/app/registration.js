@@ -6,6 +6,7 @@ var main = {
 
         _self.listenPasswordChange();
         _self.validateSubmit();
+        _self.cancelRegistration();
     },
     listenPasswordChange: function() {
         let _self = this;
@@ -37,5 +38,15 @@ var main = {
                 alert("비밀번호가 반드시 일치해야 합니다.");
             }
         });
+    },
+    cancelRegistration: function() {
+        let _self = this;
+
+        let cancelButton = document.getElementById("cancel-button");
+        cancelButton.addEventListener("click", () => {
+            window.location.href = "/login";
+        });
     }
 }
+
+main.init();

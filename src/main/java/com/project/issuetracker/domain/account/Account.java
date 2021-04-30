@@ -59,7 +59,16 @@ public class Account extends BaseTimeEntity {
     }
 
     @Override
-    public String toString() {
-        return String.format("User: ID - %l\tEmail - %s", id, email);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Account)) {
+            return false;
+        }
+        Account account = (Account) obj;
+
+        return this.id.equals(account.id);
     }
 }

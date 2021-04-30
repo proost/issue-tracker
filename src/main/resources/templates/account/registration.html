@@ -9,7 +9,7 @@
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
-<form id="registration-form" class="form-horizontal" action='' method="POST">
+<form id="registration-form" class="form-horizontal" action="/registration" method="POST">
   <fieldset>
     <div id="legend">
       <legend class="">회원가입</legend>
@@ -18,7 +18,7 @@
       <!-- Username -->
       <label class="control-label"  for="username">이름</label>
       <div class="controls">
-        <input type="text" id="username" name="username" class="input-xlarge">
+        <input type="text" id="username" name="username" class="input-xlarge" required>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
       <!-- E-mail -->
       <label class="control-label" for="email">이메일</label>
       <div class="controls">
-        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+        <input type="text" id="email" name="email" class="input-xlarge" required>
       </div>
     </div>
 
@@ -43,7 +43,7 @@
       <!-- Password -->
       <label class="control-label"  for="password-confirm">비밀번호 확인</label>
       <div class="controls">
-        <input type="password" id="password-confirm" name="password_confirm" class="input-xlarge" >
+        <input type="password" id="password-confirm" name="password-confirm" class="input-xlarge" >
         <p id="password-confirm-msg" class="help-block"></p>
       </div>
     </div>
@@ -52,7 +52,7 @@
       <!-- TeamName -->
       <label class="control-label" for="team-name">팀명</label>
       <div class="controls">
-        <input type="text" id="team-name" name="team_name" placeholder="" class="input-xlarge" required>
+        <input type="text" id="team-name" name="teamName" class="input-xlarge" required>
       </div>
     </div>
 
@@ -60,6 +60,7 @@
       <!-- Button -->
       <div class="controls">
         <button class="btn btn-success">가입</button>
+        <button id="cancel-button" class="btn btn-danger">취소</button>
       </div>
     </div>
   </fieldset>

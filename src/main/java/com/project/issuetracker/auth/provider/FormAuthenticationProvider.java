@@ -21,11 +21,17 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
 
     @Transactional
     @Override
-    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         final String email = authentication.getName();
         final String password = (String) authentication.getCredentials();
 
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println("=====================");
+
         final AccountDetail accountDetail = (AccountDetail) userDetailsService.loadUserByUsername(email);
+
+        System.out.println(accountDetail);
         if (!passwordEncoder.matches(password, accountDetail.getPassword())) {
             throw new BadCredentialsException("Invalid Password");
         }

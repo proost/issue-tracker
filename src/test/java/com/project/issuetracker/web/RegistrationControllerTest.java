@@ -77,8 +77,11 @@ public class RegistrationControllerTest {
 
         // when
         String url = "http://localhost:" + port + "/registration";
-        mvc.perform(post("/registration").with(user("user").password("passwd")))
-                .andExpect(status().isOk());
+        mvc.perform(
+                    post("/registration")
+                    .with(user("user").password("passwd"))
+                    .params(params)
+            ).andExpect(status().is3xxRedirection());
 
         // then
         Account account = accountRepository.findByEmail("tester@test.com").get();

@@ -1,10 +1,11 @@
-package com.project.issuetracker.web;
+package com.project.issuetracker.web.controller;
 
 import com.project.issuetracker.service.post.PostService;
 import com.project.issuetracker.web.dto.post.PostResponse;
 import com.project.issuetracker.web.dto.post.PostSaveRequest;
 import com.project.issuetracker.web.dto.post.PostUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -14,13 +15,17 @@ public class PostApiController {
     private final PostService postService;
 
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostSaveRequest request) {
-        return postService.save(request);
+    public HttpStatus save(@RequestBody PostSaveRequest request) {
+        postService.save(request);
+
+        return HttpStatus.ACCEPTED;
     }
 
     @PutMapping("/api/v1/posts/{id}")
-    public Long update(@PathVariable Long id, @RequestBody PostUpdateRequest request) {
-        return postService.update(id, request);
+    public HttpStatus update(@PathVariable final Long id, @RequestBody final PostUpdateRequest request) {
+        postService.update(id, request);
+
+        return HttpStatus.ACCEPTED;
     }
 
     @GetMapping("/api/v1/posts/{id}")
@@ -29,9 +34,9 @@ public class PostApiController {
     }
 
     @DeleteMapping("/api/v1/posts/{id}")
-    public Long delete(@PathVariable Long id) {
+    public HttpStatus delete(@PathVariable Long id) {
         postService.delete(id);
-        return id;
-    }
 
+        return HttpStatus.ACCEPTED;
+    }
 }
