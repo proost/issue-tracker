@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @ToString(exclude = {"password", "picture"})
 @Getter
 @NoArgsConstructor
 @Entity
-public class Account extends BaseTimeEntity {
+public class Account extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
