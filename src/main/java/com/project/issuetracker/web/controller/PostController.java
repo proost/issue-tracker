@@ -5,6 +5,7 @@ import com.project.issuetracker.web.dto.post.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -17,12 +18,13 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping({"/","/posts"})
-    public String posts(Model model) {
+    public String posts(Model model, HttpSession httpSession) {
         model.addAttribute("posts", postService.findAllDesc());
 
-//        if (user != null) {
-//            model.addAttribute("userName", user.getName());
-//        }
+        String username = (String) httpSession.getAttribute("userName");
+        Assert.notNull(username, "계정정보가 만료되었습니다.");
+
+        model.addAttribute("username", username);
 
         return "post/posts";
     }

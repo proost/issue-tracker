@@ -25,10 +25,6 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         final String email = authentication.getName();
         final String password = (String) authentication.getCredentials();
 
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println("=====================");
-
         final AccountDetail accountDetail = (AccountDetail) userDetailsService.loadUserByUsername(email);
 
         System.out.println(accountDetail);
@@ -36,7 +32,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid Password");
         }
 
-        return new UsernamePasswordAuthenticationToken(accountDetail.getAccount(), null, accountDetail.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(accountDetail.getSessionUser(), null, accountDetail.getAuthorities());
     }
 
     @Override

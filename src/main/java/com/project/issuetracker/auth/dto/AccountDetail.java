@@ -10,10 +10,11 @@ import java.util.List;
 @Getter
 public class AccountDetail extends User {
 
-    private final Account account;
+    private final SessionUser sessionUser;
 
     public AccountDetail(Account account, List<GrantedAuthority> roles) {
         super(account.getName(), account.getPassword(), roles);
-        this.account = account;
+
+        this.sessionUser = SessionUser.fromEntity(account);
     }
 }
