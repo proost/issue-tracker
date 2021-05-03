@@ -27,7 +27,6 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
 
         final AccountDetail accountDetail = (AccountDetail) userDetailsService.loadUserByUsername(email);
 
-        System.out.println(accountDetail);
         if (!passwordEncoder.matches(password, accountDetail.getPassword())) {
             throw new BadCredentialsException("Invalid Password");
         }
