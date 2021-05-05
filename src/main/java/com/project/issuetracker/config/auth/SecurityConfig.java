@@ -2,6 +2,7 @@ package com.project.issuetracker.config.auth;
 
 import com.project.issuetracker.domain.account.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +16,20 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Profile({"dev", "prod"})
-@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProvider authenticationProvider;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    public SecurityConfig(AuthenticationProvider authenticationProvider, AuthenticationSuccessHandler authenticationSuccessHandler,
+                          AuthenticationFailureHandler authenticationFailureHandler) {
+        this.authenticationProvider = authenticationProvider;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -32,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .csrf().disable()
                     .headers().frameOptions().disable()
                 .and()
                     .formLogin()

@@ -10,6 +10,7 @@
 </head>
 <body>
 <form id="registration-form" class="form-horizontal" action="/registration" method="POST">
+  <input type="hidden" name="{{_csrf.parameterName}}" value="{{_csrf.token}}"/>
   <fieldset>
     <div id="legend">
       <legend class="">회원가입</legend>

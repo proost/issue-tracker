@@ -22,7 +22,7 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser)  authentication.getPrincipal();
-        session.setAttribute("userName", sessionUser.getName());
+        session.setAttribute("username", sessionUser.getName());
         session.setAttribute("email", sessionUser.getEmail());
         session.setAttribute("team", sessionUser.getTeam());
 

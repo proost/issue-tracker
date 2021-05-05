@@ -28,7 +28,7 @@ public class AccountDetailService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Can't find user"));
 
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(account.getRole().name()));
+        roles.add(new SimpleGrantedAuthority(account.getRoleKey()));
 
         return new AccountDetail(account, roles);
     }

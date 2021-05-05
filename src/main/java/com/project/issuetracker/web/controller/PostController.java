@@ -21,7 +21,7 @@ public class PostController {
     public String posts(Model model, HttpSession httpSession) {
         model.addAttribute("posts", postService.findAllDesc());
 
-        String username = (String) httpSession.getAttribute("userName");
+        String username = (String) httpSession.getAttribute("username");
         Assert.notNull(username, "계정정보가 만료되었습니다.");
 
         model.addAttribute("username", username);
