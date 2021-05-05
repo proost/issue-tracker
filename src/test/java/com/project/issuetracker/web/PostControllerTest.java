@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -32,6 +33,7 @@ public class PostControllerTest {
     private WebApplicationContext context;
 
     private MockMvc mvc;
+    private MockHttpSession session;
 
     @Before
     public void setup() {
@@ -39,6 +41,9 @@ public class PostControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
+        session = new MockHttpSession();
+        session.setAttribute("username", "tester");
     }
 
     @WithMockUser(username = "user", password = "passwd")
@@ -49,7 +54,9 @@ public class PostControllerTest {
 
 
         //then
-        mvc.perform(get(url).with(user("user").password("passwd")))
+        mvc.perform(get(url).with(user("user").password("passwd"))
+                .session(session)
+        )
                 .andExpect(status().isOk())
                 .andExpect(view().name("post/posts"));
     }

@@ -81,7 +81,7 @@ public class RegistrationControllerTest {
         String url = "http://localhost:" + port + "/registration";
         mvc.perform(
                     post("/registration")
-                    .with(user("user").password("passwd"))
+                    .with(user("user").password("passwd")).with(csrf())
                     .params(params)
             ).andExpect(status().is3xxRedirection());
 

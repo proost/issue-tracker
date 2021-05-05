@@ -3,3 +3,5 @@
 application-oauth.properties
 .sh
 application-real-db.properties
+lombok.config
+build/

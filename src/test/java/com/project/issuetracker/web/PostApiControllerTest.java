@@ -111,7 +111,7 @@ public class PostApiControllerTest {
         HttpEntity<PostUpdateRequest> requestEntity = new HttpEntity<>(request);
 
         // when
-        mvc.perform(put(url).with(user("user").password("passwd"))
+        mvc.perform(put(url).with(user("user").password("passwd")).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isOk());
