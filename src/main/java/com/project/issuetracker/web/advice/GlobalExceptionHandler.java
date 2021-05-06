@@ -12,6 +12,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public String handleIOException(IOException ex, Model model) {
+        ex.printStackTrace();
+
         model.addAttribute("status", "500");
         model.addAttribute("message", ex.getMessage());
 
@@ -20,6 +22,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public String handleIllegalArgumentException(IllegalArgumentException ex, Model model) {
+        ex.printStackTrace();
+
         model.addAttribute("status", "400");
         model.addAttribute("message", ex.getMessage());
 
@@ -28,6 +32,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public String handleBadCredentialsException(BadCredentialsException ex, Model model) {
+        ex.printStackTrace();
+
         model.addAttribute("status", "400");
         model.addAttribute("message", ex.getMessage());
 

@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
 
 @Profile({"dev", "prod"})
 @EnableWebSecurity
@@ -22,13 +23,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthenticationProvider authenticationProvider;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
+    private final RememberMeServices rememberMeServices;
 
     @Autowired
-    public SecurityConfig(AuthenticationProvider authenticationProvider, AuthenticationSuccessHandler authenticationSuccessHandler,
-                          AuthenticationFailureHandler authenticationFailureHandler) {
+    public SecurityConfig(AuthenticationProvider authenticationProvider,
+                          AuthenticationSuccessHandler authenticationSuccessHandler,
+                          AuthenticationFailureHandler authenticationFailureHandler,
+                          RememberMeServices rememberMeServices) {
         this.authenticationProvider = authenticationProvider;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.authenticationFailureHandler = authenticationFailureHandler;
+        this.rememberMeServices = rememberMeServices;
     }
 
     @Override
@@ -55,7 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/login**", "/registration").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
-                    .anyRequest().authenticated();
+                    .anyRequest().authenticated()
+                .and()
+                    .rememberMe()
+                    .rememberMeServices(rememberMeServices)
+                    .authenticationSuccessHandler(authenticationSuccessHandler);
     }
 
     @Override

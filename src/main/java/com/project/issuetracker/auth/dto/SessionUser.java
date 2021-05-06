@@ -3,11 +3,9 @@ package com.project.issuetracker.auth.dto;
 import com.project.issuetracker.domain.account.Account;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.io.Serializable;
 
-@ToString
 @Getter
 public class SessionUser implements Serializable {
     private final String name;
@@ -27,5 +25,10 @@ public class SessionUser implements Serializable {
                 .email(account.getEmail())
                 .team(account.getTeam())
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return email;
     }
 }
