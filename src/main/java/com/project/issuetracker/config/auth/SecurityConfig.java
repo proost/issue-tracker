@@ -1,8 +1,8 @@
 package com.project.issuetracker.config.auth;
 
 import com.project.issuetracker.domain.account.Role;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,19 +21,22 @@ import org.springframework.security.web.authentication.RememberMeServices;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProvider authenticationProvider;
-    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final AuthenticationSuccessHandler loginAuthenticationSuccessHandler;
+    private final AuthenticationSuccessHandler rememberMeAuthenticationSuccessHandler;
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final RememberMeServices rememberMeServices;
 
     @Autowired
     public SecurityConfig(AuthenticationProvider authenticationProvider,
-                          AuthenticationSuccessHandler authenticationSuccessHandler,
+                          @Qualifier("form") AuthenticationSuccessHandler loginAuthenticationSuccessHandler,
+                          @Qualifier("remember-me") AuthenticationSuccessHandler rememberMeAuthenticationSuccessHandler,
                           AuthenticationFailureHandler authenticationFailureHandler,
                           RememberMeServices rememberMeServices) {
         this.authenticationProvider = authenticationProvider;
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.loginAuthenticationSuccessHandler = loginAuthenticationSuccessHandler;
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.rememberMeServices = rememberMeServices;
+        this.rememberMeAuthenticationSuccessHandler = rememberMeAuthenticationSuccessHandler;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/loginProcess")
-                    .successHandler(authenticationSuccessHandler)
+                    .successHandler(loginAuthenticationSuccessHandler)
                     .failureHandler(authenticationFailureHandler)
                     .permitAll()
                 .and()
@@ -64,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .rememberMe()
                     .rememberMeServices(rememberMeServices)
-                    .authenticationSuccessHandler(authenticationSuccessHandler);
+                    .authenticationSuccessHandler(rememberMeAuthenticationSuccessHandler);
     }
 
     @Override

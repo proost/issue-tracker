@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Component
-public class FormAuthenticationProvider implements AuthenticationProvider {
+public class AccountAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -31,7 +31,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid Password");
         }
 
-        return new UsernamePasswordAuthenticationToken(accountDetail.getSessionUser(), null, accountDetail.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(accountDetail, null, accountDetail.getAuthorities());
     }
 
     @Override
