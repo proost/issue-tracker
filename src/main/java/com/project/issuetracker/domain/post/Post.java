@@ -1,6 +1,7 @@
 package com.project.issuetracker.domain.post;
 
 import com.project.issuetracker.domain.BaseTimeEntity;
+import com.project.issuetracker.domain.account.Account;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,12 @@ public class Post extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID")
+    private Account author;
 
     @Builder
-    public Post(String title, String content, String author) {
+    public Post(String title, String content, Account author) {
         this.title = title;
         this.content = content;
         this.author = author;

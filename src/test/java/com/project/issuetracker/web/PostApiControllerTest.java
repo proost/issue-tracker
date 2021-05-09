@@ -1,6 +1,9 @@
 package com.project.issuetracker.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.issuetracker.domain.account.Account;
+import com.project.issuetracker.domain.account.AccountRepository;
+import com.project.issuetracker.domain.account.Role;
 import com.project.issuetracker.domain.post.Post;
 import com.project.issuetracker.domain.post.PostRepository;
 import com.project.issuetracker.web.dto.post.PostSaveRequest;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -44,7 +48,11 @@ public class PostApiControllerTest {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     private MockMvc mvc;
+    private MockHttpSession session;
 
     @Before
     public void setup() {
@@ -52,31 +60,49 @@ public class PostApiControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
+        session = new MockHttpSession();
+        session.setAttribute("username", "tester");
     }
 
     @After
     public void tearDown() throws Exception {
         postRepository.deleteAll();
+        accountRepository.deleteAll();
     }
 
     @WithMockUser(username = "user", password = "passwd")
     @Test
     public void enrollPosts() throws Exception {
         //given
+        Account savedAccount = accountRepository.save(Account.builder()
+                .email("tester@test.com")
+                .password("test")
+                .team("test")
+                .name("tester")
+                .role(Role.USER)
+                .build()
+        );
+
         String title = "title";
         String content = "content";
         PostSaveRequest request = PostSaveRequest.builder()
                                                     .title(title)
                                                     .content(content)
-                                                    .author("author")
                                                     .build();
+
+        session.setAttribute("accountId", savedAccount.getId());
 
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         //when
-        mvc.perform(post(url).with(user("user").password("passwd"))
+        mvc.perform(post(url)
+                .with(user("user").password("passwd"))
+                .with(csrf())
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(request)))
+                .content(new ObjectMapper().writeValueAsString(request))
+        )
                 .andExpect(status().isOk());
 
         //then
@@ -89,11 +115,20 @@ public class PostApiControllerTest {
     @Test
     public void updatePosts() throws Exception {
         //given
+        Account savedAccount = accountRepository.save(Account.builder()
+                .email("tester@test.com")
+                .password("test")
+                .team("test")
+                .name("tester")
+                .role(Role.USER)
+                .build()
+        );
+
         Post savedPost = postRepository.save(
                 Post.builder()
                 .title("title")
                 .content("content")
-                .author("author")
+                .author(savedAccount)
                 .build()
         );
 
@@ -106,14 +141,20 @@ public class PostApiControllerTest {
                 .content(expectedContent)
                 .build();
 
+        session.setAttribute("accountId", savedAccount.getId());
+
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
         HttpEntity<PostUpdateRequest> requestEntity = new HttpEntity<>(request);
 
         // when
-        mvc.perform(put(url).with(user("user").password("passwd")).with(csrf())
+        mvc.perform(put(url)
+                .with(user("user").password("passwd"))
+                .with(csrf())
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(request)))
+                .content(new ObjectMapper().writeValueAsString(request))
+        )
                 .andExpect(status().isOk());
 
 

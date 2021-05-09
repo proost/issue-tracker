@@ -34,7 +34,6 @@ public class PostRepositoryTest {
                 Post.builder()
                 .title("title")
                 .content("content")
-                .author("author")
                 .build()
         );
 

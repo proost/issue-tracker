@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 public class AccountDetail extends User {
 
+    private final Long accountId;
     private final String email;
     private final String name;
     private final String team;
@@ -22,5 +23,6 @@ public class AccountDetail extends User {
         this.email = account.getEmail();
         this.name = account.getName();
         this.team = account.getTeam();
+        this.accountId = account.getId();
     }
 }

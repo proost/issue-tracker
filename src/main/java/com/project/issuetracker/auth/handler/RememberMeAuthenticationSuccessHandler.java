@@ -22,6 +22,7 @@ public class RememberMeAuthenticationSuccessHandler extends SavedRequestAwareAut
         session.setAttribute("username", accountDetail.getName());
         session.setAttribute("email", accountDetail.getEmail());
         session.setAttribute("team", accountDetail.getTeam());
+        session.setAttribute("accountId", accountDetail.getAccountId());
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

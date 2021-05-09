@@ -15,7 +15,7 @@ var main = {
     save: function() {
         var data = {
             title: $('#title').val(),
-            author: $('#author').val(),
+            accountId: $('#account-id').val(),
             content: $('#content').val()
         };
 

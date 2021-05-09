@@ -30,6 +30,16 @@ public class GlobalExceptionHandler {
         return "error";
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public String handleIllegalArgumentException(IllegalStateException ex, Model model) {
+        ex.printStackTrace();
+
+        model.addAttribute("status", "400");
+        model.addAttribute("message", ex.getMessage());
+
+        return "error";
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     public String handleBadCredentialsException(BadCredentialsException ex, Model model) {
         ex.printStackTrace();

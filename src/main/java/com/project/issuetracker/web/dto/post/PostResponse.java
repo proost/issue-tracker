@@ -8,16 +8,18 @@ import lombok.ToString;
 @Getter
 public class PostResponse {
 
-    private Long id;
-    private String title;
-    private String content;
-    private String author;
+    private final Long id;
+    private final String title;
+    private final String content;
+    private final String authorName;
+    private final long authorId;
 
     public PostResponse(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.author = entity.getAuthor();
+        this.authorName = entity.getAuthor().getName();
+        this.authorId = entity.getAuthor().getId();
     }
 
 }

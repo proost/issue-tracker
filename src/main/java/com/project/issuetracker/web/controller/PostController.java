@@ -19,26 +19,39 @@ public class PostController {
 
     @GetMapping({"/","/posts"})
     public String posts(Model model, HttpSession httpSession) {
-        model.addAttribute("posts", postService.findAllDesc());
-
         String username = (String) httpSession.getAttribute("username");
-        Assert.notNull(username, "계정정보가 만료되었습니다.");
+        Assert.notNull(username, "세션이 만료되었습니다.");
 
+        model.addAttribute("posts", postService.findAllDesc());
         model.addAttribute("username", username);
 
         return "post/posts";
     }
 
     @GetMapping("/posts/save")
-    public String postsSave() {
+    public String postsSave(final HttpSession session, Model model) {
+        final String username = (String) session.getAttribute("username");
+
+        Assert.notNull(username, "세션이 만료되었습니다.");
+
+        model.addAttribute("username", username);
+
         return "post/post-save";
     }
 
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model) {
-        PostResponse response = postService.findById(id);
+    @GetMapping("/posts/{id}")
+    public String postDetail(@PathVariable final Long id, Model model, final HttpSession session) {
+        final Long accountId = (Long) session.getAttribute("accountId");
+
+        Assert.notNull(accountId, "세션이 만료되었습니다.");
+
+        final PostResponse response = postService.findById(id);
         model.addAttribute("post", response);
 
-        return "post/post-update";
+        if (response.getAuthorId() == accountId) {
+            model.addAttribute("isAuthor", true);
+        }
+
+        return "post/post-detail";
     }
 }

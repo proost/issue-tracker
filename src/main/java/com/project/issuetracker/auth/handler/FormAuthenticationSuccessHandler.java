@@ -25,6 +25,7 @@ public class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         session.setAttribute("username", accountDetail.getName());
         session.setAttribute("email", accountDetail.getEmail());
         session.setAttribute("team", accountDetail.getTeam());
+        session.setAttribute("accountId", accountDetail.getAccountId());
 
         strategy.sendRedirect(request, response, "/posts");
 

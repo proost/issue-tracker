@@ -60,4 +60,20 @@ public class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("post/posts"));
     }
+
+
+    @WithMockUser(username = "user", password = "passwd")
+    @Test
+    public void loadPostSave() throws Exception {
+        //when
+        String url = "http://localhost:" + port + "/posts/save";
+
+
+        //then
+        mvc.perform(get(url).with(user("user").password("passwd"))
+                .session(session)
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("post/post-save"));
+    }
 }
