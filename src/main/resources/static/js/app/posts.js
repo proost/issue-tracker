@@ -11,6 +11,9 @@ var main = {
         $("#btn-delete").on("click", function () {
             _this.delete();
         });
+        $("#logout-button").on("click", function() {
+            _this.logout();
+        })
     },
     save: function() {
         var data = {
@@ -85,6 +88,24 @@ var main = {
         }).fail(function(error) {
             alert(JSON.stringify(error));
         })
+    },
+    logout: function () {
+
+        let header = $("#csrf-header").attr("content");
+        let token = $("#csrf-token").attr("content");
+
+        $.ajax({
+            type: 'POST',
+            url: '/logout',
+            data: token,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        }).done(function() {
+            window.location.href = '/login';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
     }
 }
 

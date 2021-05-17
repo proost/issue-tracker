@@ -1,4 +1,4 @@
-{{>layout/header}}
+{{>layout/header-csrf}}
 
 <h1>Issue Tracker</h1>
 <div class="col-md-12">
@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
             Logged in as: <span id="user">{{username}}</span>
-            <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+            <a id="logout-button" class="btn btn-info active" role="button">Logout</a>
         </div>
     </div>
     <br>

@@ -17,7 +17,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping({"/","/posts"})
+    @GetMapping({"/", "/posts"})
     public String posts(Model model, HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
         Assert.notNull(username, "세션이 만료되었습니다.");
