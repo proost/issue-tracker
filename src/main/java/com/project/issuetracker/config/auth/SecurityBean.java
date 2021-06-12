@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 import javax.sql.DataSource;
 
-@Profile({"dev", "prod"})
+@Profile({"dev", "prod", "test"})
 @Configuration
 @RequiredArgsConstructor
 public class SecurityBean {

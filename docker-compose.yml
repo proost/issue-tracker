@@ -1,0 +1,42 @@
+version: "3.6"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PROFILE=prod
+      - DB_HOST_NAME=db
+      - DB_PORT=3306
+      - DB_NAME=issue_tracker
+      - DB_USER=admin
+      - DB_PASSWORD=1q2w3e4r
+      - REDIS_HOST_NAME=redis
+      - REDIS_PORT=6379
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+      - db
+  db:
+    image: "mysql:8.0"
+    environment:
+      - MYSQL_DATABASE=issue_tracker
+      - MYSQL_ROOT_PASSWORD=1q2w3e4r
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=1q2w3e4r
+    expose:
+      - 3306
+  redis:
+    image: "redis:latest"
+    container_name: redis
+    expose:
+      - 6379
+  nginx:
+    image: "nginx:latest"
+    ports:
+      - "7070:7070"
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - app

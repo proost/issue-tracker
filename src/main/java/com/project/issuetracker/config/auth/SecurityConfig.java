@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
 
-@Profile({"dev", "prod"})
+@Profile({"dev", "prod", "test"})
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("SESSION")
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/registration").permitAll()
+                    .antMatchers("/registration", "/hi", "/hello").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .anyRequest().authenticated()
                 .and()

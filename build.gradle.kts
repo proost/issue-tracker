@@ -21,10 +21,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("org.mariadb.jdbc:mariadb-java-client")
-    compileOnly("io.lettuce:lettuce-core")
-    compileOnly("org.springframework.session:spring-session-data-redis")
+    implementation("mysql:mysql-connector-java")
+    implementation("org.springframework.session:spring-session-data-redis")
 
     implementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
